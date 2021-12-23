@@ -1,0 +1,1 @@
+az webapp up --sku B1 --location westeurope --name dnw-primereact-website --os-type linux  --resource-group dnw-rg  --plan dnw-plan
