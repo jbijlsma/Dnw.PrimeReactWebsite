@@ -1,4 +1,8 @@
 //Suggested location to add your overrides so that migration would be easy by just updating the SASS folder in the future
+.layout-topbar {
+  z-index: 10000;
+}
+
 .layout-sidebar {
   position: fixed;
   left: 0;
@@ -11,6 +15,9 @@
   transition: transform .4s cubic-bezier(.05,.74,.2,.99);
   display: flex;
   flex-direction: column;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
   
   .layout-sidebar-filter {
     padding: 1.25rem 1rem;
