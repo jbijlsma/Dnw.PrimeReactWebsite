@@ -34,6 +34,7 @@ import { TimelineDemo } from './pages/TimelineDemo';
 
 import PrimeReact from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
+import { InputText } from 'primereact/inputtext';
 
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -277,6 +278,10 @@ const App = () => {
         'layout-theme-light': layoutColorMode === 'light'
     });
 
+    const showClearIcon = true;
+    const filterContentClassName = classNames('layout-sidebar-filter-content p-input-filled p-input-icon-left p-fluid', { 'p-input-icon-right': showClearIcon });
+    const searchInput = useRef();
+
     return (
         <div className={wrapperClass} onClick={onWrapperClick}>
             <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
@@ -285,6 +290,13 @@ const App = () => {
                 mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />
 
             <div className="layout-sidebar" onClick={onSidebarClick}>
+                <div className="layout-sidebar-filter">
+                    <div className={filterContentClassName}>
+                        <i className="pi pi-search" />
+                        <InputText ref={searchInput} type="text" onChange={_ => {}} placeholder="Search" aria-label="Search input" autoComplete="off" />
+                        {showClearIcon && <i className="clear-icon pi pi-times" onClick={_ => {}} />}
+                    </div>
+                </div>
                 <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
             </div>
 
