@@ -1,7 +1,7 @@
 //Suggested location to add your overrides so that migration would be easy by just updating the SASS folder in the future
-.layout-topbar {
-  z-index: 10000;
-}
+//.layout-topbar {
+//  z-index: 10000;
+//}
 
 .layout-sidebar {
   position: fixed;
@@ -18,7 +18,7 @@
   padding: 0;
   border-radius: 0;
   box-shadow: none;
-  
+
   .layout-sidebar-filter {
     padding: 1.25rem 1rem;
     border-bottom: 1px solid var(--surface-d);
@@ -46,7 +46,7 @@
     padding: 0 1rem;
     overflow-y: auto;
     flex-grow: 1;
-    
+
     .layout-menu {
       padding-top: 10px;
     }
