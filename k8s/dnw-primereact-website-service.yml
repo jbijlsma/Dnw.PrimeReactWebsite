@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: dnw-react
+    app: dnw-primereact-website
   ports:
     - port: 5050
       targetPort: 5050
