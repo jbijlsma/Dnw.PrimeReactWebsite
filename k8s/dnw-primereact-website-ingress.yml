@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dnw-primereact-website-ingress
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # Since the tls section has been commented out and we rely on the wildcard certificate this is not needed anymore
+    # cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+spec:
+  # Leaving this here will issue a new tls certificate for aspnetapp.dotnet-works.com
+  # By leaving is out we can use the generic Ingress configuration and default TLS certificate for *.dotnet-works.com
+  # See the k8s/certs repo 
+  #  tls:
+  #    - hosts:
+  #        - aspnetapp.dotnet-works.com
+  #      secretName: aspnetapp-dotnet-works-com-tls
+  rules:
+    - host: dnw-primereact-website.dotnet-works.com
+      http:
+        paths:
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: dnw-primereact-website-service
+                port:
+                  number: 5050

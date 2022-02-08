@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dnw-primereact-website-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dnw-primereact-website
+  template:
+    metadata:
+      labels:
+        app: dnw-primereact-website
+    spec:
+      containers:
+        - name: dnw-primereact-website
+          image: dnw2022/dnw-primereact-website:latest
+          #        resources:
+          #          limits:
+          #            memory: "128Mi"
+          #            cpu: "500m"
+          ports:
+            - containerPort: 80

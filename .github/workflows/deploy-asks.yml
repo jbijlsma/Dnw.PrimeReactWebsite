@@ -1,0 +1,53 @@
+name: Deploy to Azure Kubernetes Engine (AKS)
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  DOCKER_ID: dnw2022
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_TOKEN }}
+  AKS_CLUSTER_NAME: 'cluster-dnw-aks'
+  AKS_RESOURCE_GROUP: 'rg-dnw'
+  REPO_NAME: 'dnw2022'
+  SITE_NAME: 'dnw-primereact-website'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # https://github.com/Azure/login
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # https://github.com/Azure/setup-kubectl
+      - name: Kubectl tool installer
+        uses: Azure/setup-kubectl@v2.0
+        with:
+          version: 'v1.21.7'
+
+      # https://github.com/Azure/aks-set-context
+      - name: Set Context for Azure Kubernetes Cluster using azure/aks-set-context@v1 action
+        uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+          resource-group: ${{ env.AKS_RESOURCE_GROUP }}
+
+      - name: Build images and push them to Docker Hub
+        run: |-
+          echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_ID --password-stdin
+          IMAGE_TAG="${{ env.REPO_NAME }}/${{ env.SITE_NAME }}:latest"
+          docker build -t $IMAGE_TAG -f ./Dockerfile .
+          docker push $IMAGE_TAG
+
+      - name: Deploy to AKS
+        run: |-
+          kubectl apply -f k8s
+          kubectl rollout restart "deployment/${{ env.SITE_NAME }}-deployment"

@@ -11,6 +11,7 @@
     <SpaProxyServerUrl>https://localhost:44412</SpaProxyServerUrl>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RuntimeIdentifiers>linux-musl-arm64;linux-musl-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
