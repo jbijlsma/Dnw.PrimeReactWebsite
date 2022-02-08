@@ -20,4 +20,4 @@ ENV ASPNETCORE_URLS=http://+:5050
 ENV ASPNETCORE_ENVIRONMENT=Production
 
 # this should be the entrypoint dll
-ENTRYPOINT ["./Dnw.React"]
+ENTRYPOINT ["./Dnw.PrimeReactWebsite"]
